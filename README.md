@@ -139,10 +139,14 @@ report_timing -to REGA_reg/Q -delay max
 
 ![image](https://github.com/user-attachments/assets/764d5c42-38eb-481c-9fad-2619e50c422b)
 ![image](https://github.com/user-attachments/assets/fe6f168a-61fe-4715-804d-229e6dbfe3a7)
-These commands will report the timing paths with the minimum and maximum delays to the output Q of the register REGA_reg.
+* These commands will report the timing paths with the minimum and maximum delays to the output Q of the register REGA_reg.
 
 # IO Delays
+Commands:
+```
+set_input_delay -max 5 -clock [get_clocks MYCLK] [get_ports IN_A]
 
+```
 
 
 
