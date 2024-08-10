@@ -150,6 +150,59 @@ report_port -verbose
 ```
 ![image](https://github.com/user-attachments/assets/b6bd4c06-6c07-4a74-b488-044b719a68d9)
 
+```
+set_input_delay -min 1 -clock [get_clocks MYCLK] [get_ports IN_A]
+set_input_delay -min 1 -clock [get_clocks MYCLK] [get_ports IN_B]
+report_timing -from IN_A -trans -nosplit
+```
+![image](https://github.com/user-attachments/assets/f6bed287-7ceb-4b1f-8435-427b8e91999b)
+```
+set_output_delay -max 5 -clock [get_clocks MYCLK] [get_ports OUT_Y]
+set_output_delay -min 1 -clock [get_clocks MYCLK] [get_ports OUT_Y]
+report_timing -from OUT_Y -trans -nosplit
+```
+![image](https://github.com/user-attachments/assets/3c2eb008-dc50-4ffb-a07d-2538d2601410)
+```
+set_load -max 0.4 [get_ports OUT_Y]
+report_timing -to OUT_Y -cap -trans -nosplit
+```
+![image](https://github.com/user-attachments/assets/787c9d11-9d07-488a-8be6-1b84947af77e)
+```
+set_load -min 0.1 [get_ports OUT_Y]
+report_timing -to OUT_Y -cap -trans -nosplit -delay min
+```
+![image](https://github.com/user-attachments/assets/20f07e8a-0f8e-464c-8111-87bed232b3ad)
+
+# SDC generated_clk
+```
+create_generated_clock -name MYGEN_CLK -master MYCLK -source [get_ports clk] -div 1 [get_ports out_clk]
+report_clocks *
+```
+![image](https://github.com/user-attachments/assets/43a2dd48-275c-433e-97df-92fba2c451ae)
+
+# SDC vclk, max_latency, rise_fall IO Delays
+## Virtual clock - purpose and timing
+```
+create_clock –name VCLK –period 10
+```
+## Set driving cells
+### VCLK
+```
+create_clock -name MYCLK -per 10
+```
+![image](https://github.com/user-attachments/assets/75576339-fe8d-40c4-b7a3-9dc58a42f470)
+![image](https://github.com/user-attachments/assets/7f4fd3dd-198f-4391-9360-8e6409f80c81)
+![image](https://github.com/user-attachments/assets/d352297a-c675-4b35-a6ba-31e1dcfe8020)
+![image](https://github.com/user-attachments/assets/22075028-5b2e-4314-a87e-e41771c1c9ec)
+![image](https://github.com/user-attachments/assets/ec61a7e3-9c59-4371-b389-f6079e2012a4)
+![image](https://github.com/user-attachments/assets/44f021e0-b40d-4a2f-a3ee-9418c91fc0be)
+![image](https://github.com/user-attachments/assets/425f59e6-58de-403f-ab17-eaa4ee763ab8)
+
+
+
+
+
+
 
 
 
