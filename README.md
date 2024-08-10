@@ -145,8 +145,12 @@ report_timing -to REGA_reg/Q -delay max
 Commands:
 ```
 set_input_delay -max 5 -clock [get_clocks MYCLK] [get_ports IN_A]
-
+set_input_delay -max 5 -clock [get_clocks MYCLK] [get_ports IN_B]
+report_port -verbose
 ```
+![image](https://github.com/user-attachments/assets/b6bd4c06-6c07-4a74-b488-044b719a68d9)
+
+
 
 
 
