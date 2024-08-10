@@ -1,11 +1,47 @@
 # Advanced-Synthesis-and-STA-with-DC
+## Introduction
+Design Compiler is an Advanced Synthesis Tool used by leading semiconductor companies across world. Design Compiler RTL synthesis solution enables users to meet today's design challenges with concurrent optimization of timing, area, power and test. Design Compiler includes innovative topographical technology that enables a predictable flow resulting in faster time to results.
+
+Synthesis in VLSI is the process of converting your code (program) into a circuit. In terms of logic gates, synthesis is the process of translating an abstract design into a properly implemented chip. Synthesis of logic circuits plays a crucial role in optimizing the logic and achieving the targeted performance, area and power goals of an IC.
+
+This workshop includes the following concepts:
+
+Design fundamentals.
+* Setting up DC for synthesis.
+* Understanding and Analyzing the STA reports.
+* Understanding and writing the Synopsys Design Constraints [SDC].
+* Analyzing the quality of netlist synthesized.
+
+## Introduction to Logic Synthesis
+1.1. Introduction to DC
+* Design Compiler RTL synthesis solution enables users to meet today's design challenges with concurrent optimization of timing, area, power and test. Design Compiler includes innovative topographical technology that enables a predictable flow resulting in faster time to results. Topographical technology provides timing and area prediction within 10% of the results seen post-layout enabling designers to reduce costly iterations between synthesis and physical implementation. Design Compiler also includes a scalable infrastructure that delivers 2X faster runtime on quad-core platforms.
+
+* Design Compiler is the core of Synopsys' comprehensive RTL synthesis solution, including Power Compiler, DesignWare, PrimeTime and DFTMAX. Design Compiler NXT is also available and includes includes best-in-class quality-of-results, congestion prediction and alleviation capabilities, physical viewer, and floorplan exploration. Additionally Design Compiler NXT produces physical guidance to IC Compiler, place-and-route solution for tighter correlation to layout and faster placement runtime.
+
+* The industry's most comprehensive synthesis solution:
+![image](https://github.com/user-attachments/assets/73a04b50-a1e6-487a-85f0-e17044298335)
+### Benefits:
+1. Concurrent optimization of timing, area, power and test.
+2. Results correlate within 10% of physical implementation.
+3. Removes timing bottlenecks by creating fast critical paths.
+4. Gate-to-gate optimization for smaller area on new or legacy designs while maintaining timing Quality of Results (QoR).
+5. Cross-probing between RTL, schematic, and timing reports for fast debug.
+6. Offers more flexibility for users to control optimization on specific areas of designs.
+7. Enables higher efficiency with integrated static timing analysis, test synthesis and power synthesis.
+8. Support for multi voltage and multi supply.
+9. 2X faster runtime on quad-core compute servers.
 
 # DC SHELL
+
+sky130RTLDesignAndSynthesisWorkshop Directory has: My_Lib - which contains all the necessary library files; where lib has the standard cell libraries to be used in synthesis and verilog_model with all standard cell verilog models for the standard cells present in the lib. Ther verilog_files folder contains all the experiments for lab sessions including both verilog code and test bench codes.
+
 ## Running DC Shell
 ```
 dc_shell -64
 ```
 ![image](https://github.com/user-attachments/assets/20bc7c52-9e65-4428-a24a-c6aa0c7055ff)
+
+
 
 ## DC Shell Synthesis
 ```
@@ -47,7 +83,23 @@ compile
 ### Schematic View of the design
 ![image](https://github.com/user-attachments/assets/f06c77d3-1c40-47a5-970e-0dbaa81669ff)
 
+## Faster cells and Slower Cells
+A cell delay in the digital logic circuit depends on the load of the circuit which here is Capacitance.
+
+Faster the charging / discharging of the capacitance --> Lesser is the Cell Delay
+
+Inorder to charge/discharge the capacitance faster, we use wider transistors that can source more current. This will help us reduce the cell delay but at the same time, wider transistors consumer more power and area. Similarly, using narrower transistors help in reduced area and power but the circuit will have a higher cell delay. Hence, we have to compromise on area and power if we are to design a circuit with low cell delay.
+
+## Constraints
+A Constraint is a guidance file given to a synthesizer inorder to enable an optimum implementation of the logic circuit by selecting the appropriate flavour of cells (fast or slow).
+
 # Basics of STA
+2.1. Introduction to STA
+Static timing analysis (STA) is a method of validating the timing performance of a design by checking all possible paths for timing violations. STA breaks a design down into timing paths, calculates the signal propagation delay along each path, and checks for violations of timing constraints inside the design and at the input/output interface.
+![image](https://github.com/user-attachments/assets/a428a6a8-74cb-42b5-a7a6-329825b94f09)
+
+
+
 ### Exploring library files
 ![image](https://github.com/user-attachments/assets/4de6a464-3a84-4b7d-873a-03408b37ade3)
 ![image](https://github.com/user-attachments/assets/b57a4be9-2485-4de1-b530-87f3127b3dab)
@@ -84,6 +136,38 @@ Finally, the current design was successfully written to a DDC (Design Data Compi
 * foreach_in_collection my_port [get_ports *] { ... }: Loops over all ports to retrieve and print their names and/or attributes.
 * get_ports rst: Retrieves a specific port named rst.
 * get_attribute [get_ports rst] direction: Retrieves the direction (input/output) of the rst port.
+
+## Advanced Constraints
+Clock A digital clock is a repeating digital waveform used to step a digital circuit through a sequence of states. A clock signal oscillates between a high and a low state and is used like a metronome to coordinate actions of digital circuits. A clock signal is produced by a clock generator. Digital circuits rely on clock signals to know when and how to execute the functions that are programmed. If the clock in a design is like the heart of an animal, then clock signals are the heartbeats that keep the system in motion. In serial communication of digital data, clock recovery is the process of extracting timing information from a serial data stream to allow the receiving circuit to decode the transmitted symbols. This is one method of performing a process commonly known as clock and data recovery.
+![image](https://github.com/user-attachments/assets/91f9ff40-3b67-44c6-b72f-d8679961708f)
+
+## 3.1. Clock Tree Modelling - Uncertainty
+Clock uncertainty is the difference between the arrivals of clocks at registers in one clock domain or between domains. it can be classified as static and dynamic clock uncertainties. Pre-layout and Post-layout Uncertainty. Pre CTS uncertainty is clock skew, clock Jitter and margin. After CTS skew is calculated from the actual propagated value of the clock.
+
+Static clock uncertainty: it does not vary or varies very slowly with time. Process variation induced clock uncertainty. An example of this is clock skew.
+
+Timing Uncertainty of clock period is set by the command set_clock_uncertainty at the synthesis stage to reserve some part of the clock period for uncertain factors (like skew, jitter, OCV, CROSS TALK, MARGIN or any other pessimism) which will occur in PNR stage. The uncertainty can be used to model various factors that can reduce the clock period. It can define for both setup and hold.
+
+Skew: This phenomenon in synchronous circuits. The Difference in arrival of clock at two consecutive pins of a sequential element.
+
+max insertion delay: delay of the clock signal takes to propagate to the farthest leaf cell in the design.
+
+min insertion delay: delay of the clock signal takes to propagate to the nearest leaf cell in the design.
+
+Latency: The delay difference from the clock generation point to the clock endpoints.
+
+Source latency: Source latency is also called insertion delay. The delay from the clock source to the clock definition points. Source latency could represent either on-chip or off-chip latency.
+
+Network latency: The delay from the clock definition points (create_clock) to the flip-flop clock pins.
+
+Jitter: Jitter is the short term variations of a signal with respect to its ideal position in time. It is the variation of the clock period from edge to edge.it can vary +/- jitter value. From cycle to cycle the period and duty cycle can change slightly due to the clock generation circuitry. This can be modeled by adding uncertainty regions around the rising and falling edge of the clock waveform.
+
+Sources of jitter:
+
+Internal circuitry of the PLL. Thermal noise in crystal oscillators. Transmitters and receivers of resonating devices.
+![image](https://github.com/user-attachments/assets/1c830653-e94b-42c9-b2b4-b59dbf9a1928)
+
+
 
 # Loading Design get_pins, get_clocks, querying_clocks
 ### get_pins
@@ -174,18 +258,29 @@ report_timing -to OUT_Y -cap -trans -nosplit -delay min
 ![image](https://github.com/user-attachments/assets/20f07e8a-0f8e-464c-8111-87bed232b3ad)
 
 # SDC generated_clk
+![image](https://github.com/user-attachments/assets/b397f0fe-abe0-49ab-b7d8-24173a7cc263)
+
 ```
 create_generated_clock -name MYGEN_CLK -master MYCLK -source [get_ports clk] -div 1 [get_ports out_clk]
 report_clocks *
 ```
 ![image](https://github.com/user-attachments/assets/43a2dd48-275c-433e-97df-92fba2c451ae)
+Creates a generated clock in the current design at a declared source by defining its frequency with respect to the frequency at the reference pin. The static timing analysis tool uses this information to compute and propagate its waveform across the clock network to the clock pins of all sequential elements driven by this source.
+
+The generated clock information is also used to compute the slacks in the specified clock domain that drive optimization tools such as place-and-route.
+
 
 # SDC vclk, max_latency, rise_fall IO Delays
 ## Virtual clock - purpose and timing
+A virtual clock is used as a reference to constrain the interface pins by relating the arrivals at input/output ports with respect to it with the help of input and output delays.
+![image](https://github.com/user-attachments/assets/b2e12118-6e7d-4ed8-ae33-9bf5a81535fc)
+
+
 ```
 create_clock –name VCLK –period 10
 ```
 ## Set driving cells
+It specifies the drive characteristics of input or inout ports that are driven by the cells in the technology library. These commands associate a library pin with input ports so that delay calculation can be accurately modelled.
 ### VCLK
 ```
 create_clock -name MYCLK -per 10
