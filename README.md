@@ -1,4 +1,5 @@
-# Advanced-Synthesis-and-STA-with-DC
+# Synthesis-and-STA-with-Synopsis-DC-Compiler
+
 ## Introduction
 Design Compiler is an Advanced Synthesis Tool used by leading semiconductor companies across world. Design Compiler RTL synthesis solution enables users to meet today's design challenges with concurrent optimization of timing, area, power and test. Design Compiler includes innovative topographical technology that enables a predictable flow resulting in faster time to results.
 
