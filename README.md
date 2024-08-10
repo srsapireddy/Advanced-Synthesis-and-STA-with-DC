@@ -100,8 +100,10 @@ list_attributes -app > a
 * Redirecting the output to a file makes it easier to handle and review, especially when there are many attributes.
 
 # Creating Clock Waveforms for lab8_circuit
-![image](https://github.com/user-attachments/assets/7a3061b5-bfaf-4d90-acd6-ea5de35c3159)
-![image](https://github.com/user-attachments/assets/367be343-5c51-42ea-9c54-d9a40aca7a22)
+![image](https://github.com/user-attachments/assets/d7abf6e0-d196-4d1f-bf7e-f1cc573557a0)
+
+![image](https://github.com/user-attachments/assets/207b3d34-2267-4014-892e-c14652015ce9)
+
 * list_attributes -app > a: Lists all attributes and saves them to a file.
 * get_clocks *: Retrieves all clocks in the design.
 * create_clock -name MYCLK -period 10 [get_ports clk]: Creates a clock named MYCLK with a 10-unit period on the clk port.
@@ -109,22 +111,45 @@ list_attributes -app > a
 * get_attribute [get_clocks MYCLK] is_generated: Checks if MYCLK is a generated clock.
 * report_clocks *: Generates a report of all clocks in the design.
 
-![image](https://github.com/user-attachments/assets/158e489d-eb5d-4310-b673-8da87bb354f2)
+![image](https://github.com/user-attachments/assets/4722cc38-70aa-4af7-b495-d61ba463dc6f)
+
 
 ## 25% Duty cycle Clock
-![image](https://github.com/user-attachments/assets/e614d3bb-1fe4-4ecb-8e78-cd2c3e314450)
+![image](https://github.com/user-attachments/assets/15d3f19c-2f53-4e73-be5a-01f3db81018c)
+
 * create_clock -name MYCLK -period 10 [get_ports clk] -wave {0 2.5}: This command creates a clock named MYCLK with a period of 10 time units and a waveform where the clock is high from 0 to 2.5 time units.
 * report_clocks *: This command generates a report listing all the clocks in the current design, showing their period, waveform, and attributes.
 
 # Clock Network Modelling - Uncertainty, report_timing
-![image](https://github.com/user-attachments/assets/93314a7f-4928-4b26-8227-c3047c3b95fa)
+![image](https://github.com/user-attachments/assets/66cc8472-9cd0-42fd-9a5b-9dac13913f4b)
+
 * create_clock -name MYCLK -period 10 [get_ports clk] -wave {15 20}: This command creates a clock named MYCLK with a period of 10 units, and the waveform is specified from 15 to 20 units.
 * set_clock_latency -source 1 [get_clocks MYCLK]: This command sets the source latency of the clock MYCLK to 1 unit.
 * set_clock_latency 1 [get_clocks MYCLK]: This command sets the clock latency to 1 unit.
 * set_clock_uncertainty -hold 0.1 [get_clocks MYCLK]: This command sets the clock uncertainty for the hold time to 0.1 units.
 * set_clock_uncertainty 0.5 [get_clocks MYCLK]: This command sets the clock uncertainty for the setup time to 0.5 units.
 
-![image](https://github.com/user-attachments/assets/b08aa46b-146a-43ff-b4ee-2e432065cc96)
+![image](https://github.com/user-attachments/assets/c026731e-dccc-4414-a1fa-83e2526323c2)
+![image](https://github.com/user-attachments/assets/7857734f-9d0d-4bbd-ad6d-2459065f62e5)
+
+```
+report_timing -to REGA_reg/Q -delay min
+report_timing -to REGA_reg/Q -delay max
+```
+
+![image](https://github.com/user-attachments/assets/764d5c42-38eb-481c-9fad-2619e50c422b)
+![image](https://github.com/user-attachments/assets/fe6f168a-61fe-4715-804d-229e6dbfe3a7)
+These commands will report the timing paths with the minimum and maximum delays to the output Q of the register REGA_reg.
+
+# IO Delays
+
+
+
+
+
+
+
+
 
 
 
